@@ -1,0 +1,3 @@
+/home/mannanhunzai/cse4310/compVisHWs/primitiveOpenCVPaint/CMakeFiles/edit_cache.dir
+/home/mannanhunzai/cse4310/compVisHWs/primitiveOpenCVPaint/CMakeFiles/rebuild_cache.dir
+/home/mannanhunzai/cse4310/compVisHWs/primitiveOpenCVPaint/CMakeFiles/primitivePaint.dir
