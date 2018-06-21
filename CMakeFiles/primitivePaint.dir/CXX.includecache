@@ -9,10 +9,28 @@
 /home/mannanhunzai/cse4310/compVisHWs/primitiveOpenCVPaint/primPaint.cpp
 iostream
 -
-cstdio
+string
+-
+vector
 -
 opencv2/opencv.hpp
 /home/mannanhunzai/cse4310/compVisHWs/primitiveOpenCVPaint/opencv2/opencv.hpp
+opencv2/core.hpp
+-
+opencv2/highgui.hpp
+-
+opencv2/videoio.hpp
+-
+opencv2/objdetect.hpp
+-
+opencv2/imgproc.hpp
+-
+opencv2/core/core.hpp
+/home/mannanhunzai/cse4310/compVisHWs/primitiveOpenCVPaint/opencv2/core/core.hpp
+opencv2/highgui/highgui.hpp
+/home/mannanhunzai/cse4310/compVisHWs/primitiveOpenCVPaint/opencv2/highgui/highgui.hpp
+opencv2/imgproc/imgproc.hpp
+/home/mannanhunzai/cse4310/compVisHWs/primitiveOpenCVPaint/opencv2/imgproc/imgproc.hpp
 
 /usr/local/include/opencv/cxcore.h
 opencv2/core/core_c.h
@@ -83,6 +101,10 @@ opencv2/core/vsx_utils.hpp
 /usr/local/include/opencv2/core/opencv2/core/vsx_utils.hpp
 
 /usr/local/include/opencv2/core/bufferpool.hpp
+
+/usr/local/include/opencv2/core/core.hpp
+opencv2/core.hpp
+/usr/local/include/opencv2/core/opencv2/core.hpp
 
 /usr/local/include/opencv2/core/core_c.h
 opencv2/core/types_c.h
@@ -832,6 +854,10 @@ opencv2/videoio.hpp
 opencv2/highgui/highgui_c.h
 /usr/local/include/opencv2/opencv2/highgui/highgui_c.h
 
+/usr/local/include/opencv2/highgui/highgui.hpp
+opencv2/highgui.hpp
+/usr/local/include/opencv2/highgui/opencv2/highgui.hpp
+
 /usr/local/include/opencv2/highgui/highgui_c.h
 opencv2/core/core_c.h
 /usr/local/include/opencv2/highgui/opencv2/core/core_c.h
@@ -883,6 +909,10 @@ opencv2/highgui.hpp
 /usr/local/include/opencv2/opencv2/highgui.hpp
 opencv2/imgproc/imgproc_c.h
 /usr/local/include/opencv2/opencv2/imgproc/imgproc_c.h
+
+/usr/local/include/opencv2/imgproc/imgproc.hpp
+opencv2/imgproc.hpp
+/usr/local/include/opencv2/imgproc/opencv2/imgproc.hpp
 
 /usr/local/include/opencv2/imgproc/imgproc_c.h
 opencv2/imgproc/types_c.h
