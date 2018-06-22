@@ -18,8 +18,10 @@
 using namespace cv;
 using namespace std;
 
+// original image and a copy for reset
+Mat imageIn, originalImg;
+Mat croppedImage;
 
-Mat imageIn;
 static void clickCallback(int event, int x, int y, int flags, void* userdata);
 string togList[5] = {"EYEDROPPER", "CROP", "PENCIL", "PAINT BUCKET", "RESET"};
 int currentTool = 0;
@@ -56,11 +58,11 @@ static void clickCallback(int event, int x, int y, int flags, void* userdata)
         } else if(1 == currentTool){
           point1 = Point(x,y);
 
+        } else if(2 == currentTool){
+          imageIn.at<Vec3b>(x,y) = Vec3b(eyeDropValue[0], eyeDropValue[1], eyeDropValue[2]);
         }
 
-
-
-    }   else if(event == EVENT_RBUTTONDOWN)
+    } else if(event == EVENT_RBUTTONDOWN)
     {
       if(currentTool == 4){
         currentTool = 0;
@@ -68,23 +70,38 @@ static void clickCallback(int event, int x, int y, int flags, void* userdata)
         currentTool++;
       }
         cout << "Selected: " << togList[currentTool] << endl;
-
-
-
         return ;
-    } else if(event == EVENT_LBUTTONUP){
+    } else if(event == EVENT_LBUTTONUP)
+    {
         if(currentTool == 1){
           point2 = Point(x,y);
+
           //cout << "Point 1: (" << point1.x << ", " << point1.y << ")" << endl;
           //cout << "Point 2: (" << point2.x << ", " << point2.y << ")" << endl;
-          Rect rectROI(point1, point2);
-          rectangle(imageIn, rectROI.tl(), rectROI.br(), Scalar(0,255,255), 1,8,0);
-          imshow("imageIn", imageIn);
+          if( !(point1.x == point2.x && point1.y == point2.y))
+          {
+            Rect rectROI(point1, point2);
+            //rectangle(imageIn, rectROI.tl(), rectROI.br(), Scalar(0,255,255), 1,8,0);
+
+            croppedImage = croppedImage(rectROI);
+            imshow("imageIn", croppedImage);
+
+          } else{
+            cout << "Region cannot be cropped!" << endl;
+          }
 
 
+      }
 
-        }
 
+    }else if(event == EVENT_LBUTTONDBLCLK)
+    {
+      if(currentTool == 4)
+      {
+        imshow("imageIn", originalImg);
+        imageIn = croppedImage = originalImg.clone();
+
+      }
 
     }
 
@@ -100,7 +117,7 @@ int main(int argc, char **argv)
 
 
 	imageIn = cv::imread(argv[1], CV_LOAD_IMAGE_COLOR);
-
+  originalImg = croppedImage= imageIn.clone();
 	/* / check for file error
 	if(!imageIn.data)
 	{
@@ -108,7 +125,8 @@ int main(int argc, char **argv)
 		return 0;
 	}
   */
-    // display the input image
+  // display the input image
+  namedWindow("imageIn", WINDOW_AUTOSIZE);
 	imshow("imageIn", imageIn);
 
 	setMouseCallback("imageIn", clickCallback, &imageIn);
