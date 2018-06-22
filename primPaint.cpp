@@ -58,8 +58,6 @@ static void clickCallback(int event, int x, int y, int flags, void* userdata)
         } else if(1 == currentTool){
           point1 = Point(x,y);
 
-        } else if(2 == currentTool){
-          imageIn.at<Vec3b>(x,y) = Vec3b(eyeDropValue[0], eyeDropValue[1], eyeDropValue[2]);
         }
 
     } else if(event == EVENT_RBUTTONDOWN)
@@ -69,7 +67,7 @@ static void clickCallback(int event, int x, int y, int flags, void* userdata)
       } else{
         currentTool++;
       }
-        cout << "Selected: " << togList[currentTool] << endl;
+        cout << "Selected[" << currentTool << "]:"<<togList[currentTool] << endl;
         return ;
     } else if(event == EVENT_LBUTTONUP)
     {
@@ -89,12 +87,10 @@ static void clickCallback(int event, int x, int y, int flags, void* userdata)
           } else{
             cout << "Region cannot be cropped!" << endl;
           }
-
-
       }
 
 
-    }else if(event == EVENT_LBUTTONDBLCLK)
+    } else if(event == EVENT_LBUTTONDBLCLK)
     {
       if(currentTool == 4)
       {
@@ -102,6 +98,14 @@ static void clickCallback(int event, int x, int y, int flags, void* userdata)
         imageIn = croppedImage = originalImg.clone();
 
       }
+
+    } else if(event == EVENT_MOUSEMOVE && (flags & EVENT_FLAG_LBUTTON)){
+      if( currentTool == 2){
+        // cout << "Point: (" << x << ", " << y << ")" << endl;
+        croppedImage.at<Vec3b>(y,x) = Vec3b(eyeDropValue[0], eyeDropValue[1], eyeDropValue[2]);
+        imshow("imageIn", croppedImage);
+      }
+
 
     }
 
