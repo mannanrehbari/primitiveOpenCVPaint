@@ -1,3 +1,9 @@
+/*
+@author Abdul Mannan
+Jun 21 2018
+*/
+
+
 
 // include necessary dependencies
 #include <iostream>
@@ -7,14 +13,9 @@
 
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
-#include <opencv2/videoio.hpp>
-#include <opencv2/objdetect.hpp>
 #include <opencv2/imgproc.hpp>
-/*
-#include "opencv2/core/core.hpp"
-#include "opencv2/highgui/highgui.hpp"
-#include "opencv2/imgproc/imgproc.hpp"
-*/
+
+
 using namespace cv;
 using namespace std;
 
@@ -31,13 +32,13 @@ int eyeDropValue[3] = {255,255,255};
 //start and end points for crop ROI
 Point point1, point2;
 int drag = 0;
-Rect rect;
-Mat roiImg;
-int select_flag = 0;
+
+
+
 
 void eyeDropFunction(int y , int x){
-  cout << "LEFT CLICK (" << x << ", " << y << ")" <<endl;
-  Vec3b intensity = imageIn.at<Vec3b>(y,x);
+
+  Vec3b intensity = croppedImage.at<Vec3b>(y,x);
   eyeDropValue[0] = intensity.val[0];
   eyeDropValue[1] = intensity.val[1];
   eyeDropValue[2] = intensity.val[2];
@@ -46,7 +47,9 @@ void eyeDropFunction(int y , int x){
   return ;
 }
 
-
+void paintBucket(int y, int x){
+    Vec3b currentValue = croppedImage.at<Vec3b>(y,x);
+}
 static void clickCallback(int event, int x, int y, int flags, void* userdata)
 {
     if(event == cv::EVENT_LBUTTONDOWN)
@@ -57,8 +60,12 @@ static void clickCallback(int event, int x, int y, int flags, void* userdata)
 
         } else if(1 == currentTool){
           point1 = Point(x,y);
+        } else if(currentTool ==3){
+          //paint BUCKET
+          paintBucket(y, x);
 
         }
+
 
     } else if(event == EVENT_RBUTTONDOWN)
     {
@@ -88,8 +95,6 @@ static void clickCallback(int event, int x, int y, int flags, void* userdata)
             cout << "Region cannot be cropped!" << endl;
           }
       }
-
-
     } else if(event == EVENT_LBUTTONDBLCLK)
     {
       if(currentTool == 4)
@@ -105,23 +110,16 @@ static void clickCallback(int event, int x, int y, int flags, void* userdata)
         croppedImage.at<Vec3b>(y,x) = Vec3b(eyeDropValue[0], eyeDropValue[1], eyeDropValue[2]);
         imshow("imageIn", croppedImage);
       }
-
-
     }
-
-
     return;
-
 }
-
 
 int main(int argc, char **argv)
 {
     // open the input image
 
-
-	imageIn = cv::imread(argv[1], CV_LOAD_IMAGE_COLOR);
-  originalImg = croppedImage= imageIn.clone();
+	originalImg = cv::imread(argv[1], CV_LOAD_IMAGE_COLOR);
+  imageIn = croppedImage= originalImg.clone();
 	/* / check for file error
 	if(!imageIn.data)
 	{
@@ -131,8 +129,9 @@ int main(int argc, char **argv)
   */
   // display the input image
   namedWindow("imageIn", WINDOW_AUTOSIZE);
+  setMouseCallback("imageIn", clickCallback, &imageIn);
 	imshow("imageIn", imageIn);
 
-	setMouseCallback("imageIn", clickCallback, &imageIn);
+	//setMouseCallback("imageIn", clickCallback, &imageIn);
 	waitKey();
 }
